@@ -1,0 +1,10 @@
+body {
+	background-color: #E0FFFF
+}
+
+table, th, td {
+	border-collapse: collapse;
+	border:1px solid black;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 8px;
+}
