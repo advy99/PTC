@@ -46,4 +46,13 @@ print("La palabra introducida sin vocales es {}".format(sin_vocales))
 
 print("\nUtilizando el metodo find de la clase str:")
 
+vocales = "aeiouAEIOU"
+
+sin_vocales = palabra
+
+for letra in vocales:
+    sin_vocales = sin_vocales.replace(letra, '')
+
+
+print("La palabra introducida sin vocales es {}".format(sin_vocales))
 
