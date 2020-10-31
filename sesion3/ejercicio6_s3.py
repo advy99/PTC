@@ -41,7 +41,9 @@ def vocales(palabra):
     vocales = "aeiouAEIOU"
     solucion = ""
 
+    # recorremos las vocales
     for vocal in vocales:
+        # si encontramos una vocal, la añadimos a la solucion
         if buscar(palabra, vocal) != -1:
             solucion += vocal + " "
 
@@ -59,7 +61,7 @@ print("Se han encontrado las vocales {} en la palabra {}".format(vocales, palabr
 
 
 
-
+# hacemos lo mismo, pero con la funcion find de la clase str
 vocales = "aeiouAEIOU"
 solucion = ""
 
