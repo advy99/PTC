@@ -8,8 +8,10 @@ def redondear ( numero, decimales=2 ):
     decimales como se indiquen.
     """
 
-    #TODO
-    redondeado = numero
+    redondeado = numero * 10**decimales
+    redondeado += 0.5
+    redondeado = int(redondeado)
+    redondeado = redondeado / 10**decimales
 
 
     return redondeado
