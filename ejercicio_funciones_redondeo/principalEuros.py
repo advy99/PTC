@@ -2,17 +2,23 @@
 # -*- coding: utf-8 -*-
 
 import financiacion
+import math
+
+def pedir_valor( tipo, tope_inferior=-math.inf, tope_superior=math.inf, mensaje="" ):
+    valor = tipo(input(mensaje))
+
+    while valor < tope_inferior or valor > tope_superior:
+        print("Debes introducir un valor entre {} y {}, ambos incluidos".format(tope_inferior, tope_superior))
+        valor = tipo(input(mensaje))
+
+    return valor
 
 
-dinero = float(input("Introduce una cantidad de dinero en euros: "))
+dinero = pedir_valor(float, 0, math.inf, "Introduce una cantidad de dinero en euros: ")
 
-interes_anual = float(input("Introduce un porcentaje de interes [0-100]: "))
+interes_anual = pedir_valor(float, 0, 100, "Introduce un porcentaje de interes [0-100]: ")
 
-while interes_anual < 0 or interes_anual > 100:
-    print("Tienes que introducir un valor entre 0 y 100, ambos incluidos.")
-    interes_anual = float(input("Introduce un porcentaje de interes [0-100]: "))
-
-periodo = int(input("Introduce el número de años: "))
+periodo = pedir_valor(int, 0, math.inf, "Introduce el número de años: ")
 
 dinero = financiacion.redondear(dinero)
 interes_anual = financiacion.redondear(interes_anual)
