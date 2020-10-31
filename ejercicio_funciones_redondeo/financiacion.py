@@ -23,6 +23,13 @@ def calcular_capital_final ( capital_inicial, interes ):
     inicial con el interes obtenido, redondeado a dos decimales
     """
 
+    intereses_ganados = capital_inicial * (intereses/100)
+
+    capital_final = capital_inicial + intereses_ganados
+
+    capital_final = redondear( capital_final, 2 )
+
+    return capital_final
 
 
 if __name__ == "main":
