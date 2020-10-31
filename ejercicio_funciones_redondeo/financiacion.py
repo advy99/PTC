@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 
 def redondear ( numero, decimales=2 ):
@@ -23,7 +24,7 @@ def calcular_capital_final ( capital_inicial, interes ):
     inicial con el interes obtenido, redondeado a dos decimales
     """
 
-    intereses_ganados = capital_inicial * (intereses/100)
+    intereses_ganados = capital_inicial * (interes/100)
 
     capital_final = capital_inicial + intereses_ganados
 
