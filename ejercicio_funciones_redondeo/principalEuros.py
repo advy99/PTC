@@ -29,6 +29,5 @@ capital_final = dinero
 for i in range(periodo):
     capital_final = financiacion.calcular_capital_final(capital_final, interes_anual)
 
+print("Tras {} años, el capital obtenido a partir de {} con un interes del {} por ciento es {}".format(periodo, dinero, interes_anual, capital_final))
 
-
-print(capital_final)
