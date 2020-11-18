@@ -14,10 +14,9 @@ def mayusculas(palabra):
     Funcion que devuelve la palabra en mayusculas
     """
 
-    solucion = ""
 
     # para cada letra de la palabra
-    for letra in palabra:
+    for i in range( len(palabra) ):
         # cambiamos a mayuscula
         # la diferencia entre mayusculas y minusculas es de 32, como es el
         # quito bit (2^5), aplicando la operacion AND de la letra con ~32,
@@ -26,10 +25,11 @@ def mayusculas(palabra):
         # primero tenemos que pasarlo el caracter a su representacion en entero
         # aplicamos la operacion, y pasamos el entero a su representacion como
         # caracter
-        if letra != ' ' or letra != '\n' or letra != '\t':
-            solucion += chr(ord(letra) & ~32)
+        letra = palabra[i]
+        if letra != ' ' and letra != '\n' and letra != '\t':
+            palabra = palabra[:i] + chr(ord(letra) & ~32) + palabra[i+1:]
 
-    return solucion
+    return palabra
 
 
 # introducimos los datos
