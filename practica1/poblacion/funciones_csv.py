@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import csv
+import numpy as np
 
 
 def limpiar_csv(fichero, separador, inicio, fin, cabecera):
@@ -46,17 +47,22 @@ def leer_csv_a_diccionario(fichero, separador, inicio = None, fin = None, cabece
         fichero = limpiar_csv(fichero, separador, inicio, fin, cabecera)
 
 
-    diccionario_final = []
+    diccionario_final = {}
 
     with open(fichero) as archivo_csv:
-        reader = csv.DictReader(archivo_csv,  delimiter = separador)
+        reader = csv.reader(archivo_csv,  delimiter = separador)
         for linea in reader:
-            # a veces, si en el csv la ultima linea acaba con el delimitador
-            # mete un elemento vacio: '' : '' que es inutil
-            if '' in linea:
-                linea.pop('')
-            diccionario_final.append(linea)
 
+            provincia = linea[0]
+
+            # al tener un ; al final, hay un ultimo elemento vacio
+            # lo dejamos fuera
+            poblacion = np.array(linea[1:-1])
+
+            diccionario_final[provincia] = poblacion
+
+            print(linea)
+            print("\n\n")
 
 
     return diccionario_final
