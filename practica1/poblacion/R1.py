@@ -6,33 +6,38 @@ import funciones_csv
 import numpy as np
 
 
-cabecera_nueva = "Provincia;T2017;T2016;T2015;T2014;T2013;T2012;T2011;T2010;H2017;H2016;H2015;H2014;H2013;H2012;H2011;H2010;M2017;M2016;M2015;M2014;M2013;M2012;M2011;M2010;"
+def main():
 
-diccionario_poblacion_provincias = funciones_csv.leer_csv_a_diccionario("entradas/poblacionProvinciasHM2010-17.csv", ";", "Total Nacional", "Notas", cabecera_nueva);
+    cabecera_nueva = "Provincia;T2017;T2016;T2015;T2014;T2013;T2012;T2011;T2010;H2017;H2016;H2015;H2014;H2013;H2012;H2011;H2010;M2017;M2016;M2015;M2014;M2013;M2012;M2011;M2010;"
 
-diccionario_solucion = {}
+    diccionario_poblacion_provincias = funciones_csv.leer_csv_a_diccionario("entradas/poblacionProvinciasHM2010-17.csv", ";", "Total Nacional", "Notas", cabecera_nueva);
 
-for clave in diccionario_poblacion_provincias:
-    if clave != "Provincia":
-        datos = diccionario_poblacion_provincias[clave]
+    diccionario_solucion = {}
 
-        variaciones = []
+    for clave in diccionario_poblacion_provincias:
+        if clave != "Provincia":
+            datos = diccionario_poblacion_provincias[clave]
 
-        # los datos estan ordenados como T2017, ..., T2010
-        for i in range(7):
-            var_absoluta = float(datos[i]) - float(datos[i + 1])
-            variaciones.append(var_absoluta)
+            variaciones = []
 
-        for i in range(7):
-            var_relativa = ( float(datos[i]) / float(datos[i + 1]) ) * 100.0
-            variaciones.append(var_relativa)
+            # los datos estan ordenados como T2017, ..., T2010
+            for i in range(7):
+                var_absoluta = float(datos[i]) - float(datos[i + 1])
+                variaciones.append(var_absoluta)
 
-        diccionario_solucion[clave] = variaciones
+            for i in range(7):
+                var_relativa = ( float(datos[i]) / float(datos[i + 1]) ) * 100.0
+                variaciones.append(var_relativa)
 
-ruta_resultado = "resultados/variacionProvincias.html"
+            diccionario_solucion[clave] = variaciones
 
-cabecera = ["Provincia", "2017", "2016", "2015", "2014", "2013", "2012", "2011","2017", "2016", "2015", "2014", "2013", "2012", "2011"]
+    ruta_resultado = "resultados/variacionProvincias.html"
 
-funciones.diccionario_a_tabla_html(ruta_resultado, diccionario_solucion, "Variaciones poblacion", "Resultados", cabecera, css = "estilo.css")
+    cabecera = ["Provincia", "2017", "2016", "2015", "2014", "2013", "2012", "2011","2017", "2016", "2015", "2014", "2013", "2012", "2011"]
+
+    funciones.diccionario_a_tabla_html(ruta_resultado, diccionario_solucion, "Variaciones poblacion", "Resultados", cabecera, css = "estilo.css")
 
 
+
+if __name__ == "__main__":
+    main()
