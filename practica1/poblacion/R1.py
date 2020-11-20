@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import funciones
+import funciones_html
 import funciones_csv
 import numpy as np
 
@@ -35,7 +35,7 @@ def main():
 
     cabecera = ["Provincia", "2017", "2016", "2015", "2014", "2013", "2012", "2011","2017", "2016", "2015", "2014", "2013", "2012", "2011"]
 
-    funciones.diccionario_a_tabla_html(ruta_resultado, diccionario_solucion, "Variaciones poblacion", "Resultados", cabecera, css = "estilo.css")
+    funciones_html.diccionario_a_tabla_html(ruta_resultado, diccionario_solucion, "Variaciones poblacion", "Resultados R1", cabecera, css = "estilo.css")
 
 
 
