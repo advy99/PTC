@@ -61,9 +61,6 @@ def leer_csv_a_diccionario(fichero, separador, inicio = None, fin = None, cabece
 
             diccionario_final[provincia] = poblacion
 
-            print(linea)
-            print("\n\n")
-
 
     return diccionario_final
 
