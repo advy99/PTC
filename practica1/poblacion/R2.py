@@ -5,6 +5,7 @@ import funciones_html
 import funciones_csv
 import numpy as np
 
+
 def main():
 
     comunidades = funciones_html.leer_comunidades("entradas/comunidadesAutonomas.htm")
@@ -43,6 +44,8 @@ def main():
     ruta_resultado = "resultados/poblacionComAutonomas.html"
 
     funciones_html.diccionario_a_tabla_html(ruta_resultado, diccionario_sol, "Poblaciones por comunidad", "Resultados R2", cabecera, css = "estilo.css")
+
+    return diccionario_sol
 
 if __name__ == "__main__":
     main()
