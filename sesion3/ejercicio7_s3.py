@@ -14,6 +14,8 @@ def mayusculas(palabra):
     Funcion que devuelve la palabra en mayusculas
     """
 
+    val_a = ord('a')
+    val_z = ord('z')
 
     # para cada letra de la palabra
     for i in range( len(palabra) ):
@@ -25,9 +27,8 @@ def mayusculas(palabra):
         # primero tenemos que pasarlo el caracter a su representacion en entero
         # aplicamos la operacion, y pasamos el entero a su representacion como
         # caracter
-        letra = palabra[i]
-        if letra != ' ' and letra != '\n' and letra != '\t':
-            palabra = palabra[:i] + chr(ord(letra) & ~32) + palabra[i+1:]
+        if ord(palabra[i]) >= val_a and ord(palabra[i]) <= val_z:
+            palabra = palabra[:i] + chr(ord(palabra[i]) & ~32) + palabra[i+1:]
 
     return palabra
 
