@@ -68,7 +68,7 @@ def main():
 
     funciones_html.insertar_imagen_antes_tabla(ruta_html, "R3.png", 960, 540)
 
-    return diccionario_pob_comunidades
+    return diccionario_pob_comunidades, mas_pobladas_media
 
 
 if __name__ == "__main__":

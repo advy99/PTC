@@ -6,7 +6,7 @@ import numpy as np
 import funciones_html
 
 def main():
-    dicc_pob_com = R3.main()
+    dicc_pob_com, _ = R3.main()
 
     dicc_var_com = {}
 
