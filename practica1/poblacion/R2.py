@@ -43,7 +43,7 @@ def main():
 
     ruta_resultado = "resultados/poblacionComAutonomas.html"
 
-    funciones_html.diccionario_a_tabla_html(ruta_resultado, diccionario_sol, "Poblaciones por comunidad", "Resultados R2", cabecera, css = "estilo.css")
+    funciones_html.diccionario_a_tabla_html(ruta_resultado, diccionario_sol, "Poblaciones por comunidad", "Resultados R2 y R3: Población por comunidades", cabecera, css = "estilo.css")
 
     return diccionario_sol
 

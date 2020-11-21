@@ -35,7 +35,7 @@ def main():
 
     cabecera = ["Provincia", "Abs. 2017", "Abs. 2016", "Abs. 2015", "Abs. 2014", "Abs. 2013", "Abs. 2012", "Abs. 2011","Rel. 2017", "Rel. 2016", "Rel. 2015", "Rel. 2014", "Rel. 2013", "Rel. 2012", "Rel. 2011"]
 
-    funciones_html.diccionario_a_tabla_html(ruta_resultado, diccionario_solucion, "Variaciones poblacion", "Resultados R1", cabecera, css = "estilo.css")
+    funciones_html.diccionario_a_tabla_html(ruta_resultado, diccionario_solucion, "Variaciones poblacion", "Resultados R1: Variaciones por provincia", cabecera, css = "estilo.css")
 
 
 
