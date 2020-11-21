@@ -40,6 +40,27 @@ def diccionario_a_tabla_html(ruta, diccionario, titulo, nombre_tabla, cabecera, 
     fichero.close()
 
 
+def insertar_imagen_antes_tabla(fichero, ruta_imagen, x_img, y_img):
+    entrada = open(fichero, "r", encoding = "utf-8")
+
+    entrada_str = entrada.read()
+
+    pos_tabla = entrada_str.find("<table>")
+
+    salida_str = entrada_str[:pos_tabla]
+
+    salida_str += "<img src=\"{}\" width=\"{}\" height=\"{}\" />".format(ruta_imagen, x_img, y_img)
+
+    salida_str += entrada_str[pos_tabla:]
+
+    entrada.close()
+
+    salida = open(fichero, "w", encoding = "utf-8")
+
+    salida.write(salida_str)
+    salida.close()
+
+
 def leer_td_html(fichero):
     entrada = open(fichero,"r", encoding = "utf-8" )
 

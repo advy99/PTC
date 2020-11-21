@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+import funciones_html
 import matplotlib.pyplot as plt
 import numpy as np
 import R2
@@ -45,7 +46,7 @@ def main():
     ancho_barra = 0.35
 
     plt.clf()
-    plt.title("Población por hombres y mujeres en 2017 de las 10 comunidades más pobladas en media desde 2010 a 2017", fontsize = 8)
+    plt.title("Población por hombres y mujeres en 2017\n de las 10 comunidades más pobladas en media desde 2010 a 2017", fontsize = 8)
 
 
     plt.xlabel("Comunidades autonomas")
@@ -57,13 +58,15 @@ def main():
     plt.bar(grupos + ancho_barra, pob_mujeres, ancho_barra, color="c", label="Mujeres")
 
 
-    plt.xticks(grupos + ancho_barra/2, mas_pobladas_media, rotation = 10, fontsize = 5)
+    plt.xticks(grupos + ancho_barra/2, mas_pobladas_media, rotation = 10, fontsize = 4)
     plt.legend()
 
 
-    plt.show()
+    plt.savefig("resultados/R3.png", dpi = 400)
 
+    ruta_html = "resultados/poblacionComAutonomas.html"
 
+    funciones_html.insertar_imagen_antes_tabla(ruta_html, "R3.png", 960, 540)
 
 
 if __name__ == "__main__":
