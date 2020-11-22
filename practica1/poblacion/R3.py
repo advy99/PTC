@@ -7,9 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import R2
 
-
-def main():
-    diccionario_pob_comunidades = R2.main()
+def com_mas_pobladas():
+    diccionario_pob_comunidades = R2.diccionario_pob_comunidades()
 
     diccionario_pob_media_comunidades = {}
 
@@ -32,8 +31,17 @@ def main():
         mas_pobladas_media.append(com_pob_ordenadas[i][0])
 
 
-    grupos = np.arange( len(mas_pobladas_media) )
 
+    return diccionario_pob_comunidades, mas_pobladas_media
+
+
+
+
+def main():
+
+    diccionario_pob_comunidades, mas_pobladas_media = com_mas_pobladas()
+
+    grupos = np.arange( len(mas_pobladas_media) )
 
     pob_hombres = []
     pob_mujeres = []
@@ -64,11 +72,13 @@ def main():
 
     plt.savefig("resultados/R3.png", dpi = 400)
 
+    # nos aseguramos que se ha ejecutado R2
+    R2.main()
+
     ruta_html = "resultados/poblacionComAutonomas.html"
 
     funciones_html.insertar_imagen_antes_tabla(ruta_html, "R3.png", 960, 540)
 
-    return diccionario_pob_comunidades, mas_pobladas_media
 
 
 if __name__ == "__main__":
