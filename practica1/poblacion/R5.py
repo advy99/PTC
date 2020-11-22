@@ -7,7 +7,8 @@ import numpy as np
 import R3
 
 def main():
-    pob_com, com_mas_pobladas = R3.main()
+
+    pob_com, com_mas_pobladas = R3.com_mas_pobladas()
 
     x_labels = [i for i in range(2010, 2018)]
 
