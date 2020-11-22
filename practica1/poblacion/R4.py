@@ -37,17 +37,21 @@ def var_pob_comunidades():
 
         # variacion relativa del total
         for i in range(7):
-            dicc_var_com[clave][contador_array] = (dicc_pob_com[clave][i] / dicc_pob_com[clave][i+1]) * 100
+            dicc_var_com[clave][contador_array] = (dicc_var_com[clave][i] / dicc_pob_com[clave][i+1]) * 100
             contador_array += 1
 
         # variacion relativa de hombres
+        # usamos i - 1 ya que al rellenar las varaciones, como saltamos el 2010
+        # nos quedamos en la posicion 7, no en la 8
         for i in range(8, 15):
-            dicc_var_com[clave][contador_array] = (dicc_pob_com[clave][i] / dicc_pob_com[clave][i+1]) * 100
+            dicc_var_com[clave][contador_array] = (dicc_var_com[clave][i - 1] / dicc_pob_com[clave][i+1]) * 100
             contador_array += 1
 
         # variacion relativa de mujeres
+        # usamos i - 2 ya que al rellenar las varaciones, como saltamos el 2010
+        # nos quedamos en la posicion 14, no en la 16
         for i in range(16, 23):
-            dicc_var_com[clave][contador_array] = (dicc_pob_com[clave][i] / dicc_pob_com[clave][i+1]) * 100
+            dicc_var_com[clave][contador_array] = (dicc_var_com[clave][i - 2] / dicc_pob_com[clave][i+1]) * 100
             contador_array += 1
 
     return dicc_var_com
