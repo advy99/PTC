@@ -25,7 +25,7 @@ def obtener_variacion():
                 variaciones.append(var_absoluta)
 
             for i in range(7):
-                var_relativa = ( float(datos[i]) / float(datos[i + 1]) ) * 100.0
+                var_relativa = ( float(variaciones[i]) / float(datos[i + 1]) ) * 100.0
                 variaciones.append(var_relativa)
 
             diccionario_solucion[clave] = variaciones
