@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import funciones_html
+import numpy as np
 
 
 
@@ -19,7 +20,7 @@ def main():
 
     i = 0
     for clave in lista_claves:
-        diccionario_var_html[clave] = lista_valores[i:i + 14]
+        diccionario_var_html[clave] = np.array(lista_valores[i:i + 14])
         i += 14
 
     for clave in diccionario_var_html:
