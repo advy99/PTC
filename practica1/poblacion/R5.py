@@ -8,7 +8,8 @@ import R3
 
 def main():
 
-    pob_com, com_mas_pobladas = R3.com_mas_pobladas()
+    fichero = "entradas/comunidadesAutonomas.htm"
+    pob_com, com_mas_pobladas = R3.com_mas_pobladas(fichero)
 
     x_labels = [i for i in range(2010, 2018)]
 

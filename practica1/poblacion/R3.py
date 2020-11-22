@@ -7,8 +7,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import R2
 
-def com_mas_pobladas():
-    diccionario_pob_comunidades = R2.diccionario_pob_comunidades()
+def com_mas_pobladas(fichero):
+
+    diccionario_pob_comunidades = R2.diccionario_pob_comunidades(fichero)
 
     diccionario_pob_media_comunidades = {}
 
@@ -36,10 +37,8 @@ def com_mas_pobladas():
 
 
 
-
-def main():
-
-    diccionario_pob_comunidades, mas_pobladas_media = com_mas_pobladas()
+def grafica_mas_poblada(fichero, ruta_salida):
+    diccionario_pob_comunidades, mas_pobladas_media = com_mas_pobladas(fichero)
 
     grupos = np.arange( len(mas_pobladas_media) )
 
@@ -70,7 +69,15 @@ def main():
     plt.legend()
 
 
-    plt.savefig("resultados/R3.png", dpi = 400)
+    plt.savefig(ruta_salida, dpi = 400)
+
+def main():
+
+    fichero = "entradas/comunidadesAutonomas.htm"
+
+    ruta_salida_fig = "resultados/R3.png"
+
+    grafica_mas_poblada(fichero, ruta_salida_fig)
 
     # nos aseguramos que se ha ejecutado R2
     R2.main()

@@ -5,9 +5,9 @@ import funciones_html
 import funciones_csv
 import numpy as np
 
-def diccionario_pob_comunidades():
+def diccionario_pob_comunidades(fichero_comunidades):
 
-    comunidades = funciones_html.leer_comunidades("entradas/comunidadesAutonomas.htm")
+    comunidades = funciones_html.leer_comunidades(fichero_comunidades)
 
 
     provincias = funciones_html.leer_comunidades_y_provincias("entradas/comunidadAutonoma-Provincia.htm", comunidades)
@@ -34,14 +34,17 @@ def diccionario_pob_comunidades():
         if clave_pob_prov != "Provincia" and clave_pob_prov != "Total Nacional":
             comunidad = provincias[clave_pob_prov]
 
-            #print(diccionario_sol[comunidad].astype(np.float64) )
-            diccionario_sol[comunidad] += diccionario_poblacion_provincias[clave_pob_prov].astype(np.float64)
+            if comunidad in comunidades:
+                #print(diccionario_sol[comunidad].astype(np.float64) )
+                diccionario_sol[comunidad] += diccionario_poblacion_provincias[clave_pob_prov].astype(np.float64)
 
     return diccionario_sol
 
 def main():
 
-    diccionario_sol = diccionario_pob_comunidades()
+    fichero = "entradas/comunidadesAutonomas.htm"
+
+    diccionario_sol = diccionario_pob_comunidades(fichero)
 
     cabecera = ["Comunidad", "T2017", "T2016", "T2015","T2014","T2013","T2012","T2011","T2010","H2017","H2016","H2015","H2014","H2013","H2012","H2011","H2010","M2017","M2016","M2015","M2014","M2013","M2012","M2011","M2010"]
 
