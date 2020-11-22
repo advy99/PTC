@@ -61,14 +61,14 @@ def insertar_imagen_antes_tabla(fichero, ruta_imagen, x_img, y_img):
     salida.close()
 
 
-def leer_td_html(fichero):
+def leer_tag_html(fichero, tag):
     entrada = open(fichero,"r", encoding = "utf-8" )
 
     entrada_str = entrada.read()
 
     soup = BeautifulSoup(entrada_str, "html.parser")
 
-    celdas = soup.find_all("td")
+    celdas = soup.find_all(tag)
 
     lista = []
 
@@ -83,7 +83,7 @@ def leer_comunidades(fichero):
 
     num_columnas = 2
 
-    lista = leer_td_html(fichero)
+    lista = leer_tag_html(fichero, "td")
 
     i = 0
     lista_final = []
@@ -104,7 +104,7 @@ def leer_comunidades(fichero):
 
 def leer_comunidades_y_provincias(fichero, comunidades):
 
-    lista = leer_td_html(fichero)
+    lista = leer_tag_html(fichero, "td")
     #print(lista)
 
     lista_com_prov = []
