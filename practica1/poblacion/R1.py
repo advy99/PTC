@@ -5,8 +5,7 @@ import funciones_html
 import funciones_csv
 import numpy as np
 
-
-def main():
+def obtener_variacion():
 
     cabecera_nueva = "Provincia;T2017;T2016;T2015;T2014;T2013;T2012;T2011;T2010;H2017;H2016;H2015;H2014;H2013;H2012;H2011;H2010;M2017;M2016;M2015;M2014;M2013;M2012;M2011;M2010;"
 
@@ -30,6 +29,12 @@ def main():
                 variaciones.append(var_relativa)
 
             diccionario_solucion[clave] = variaciones
+
+    return diccionario_solucion
+
+def main():
+
+    diccionario_solucion = obtener_variacion()
 
     ruta_resultado = "resultados/variacionProvincias.html"
 
