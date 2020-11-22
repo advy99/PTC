@@ -95,6 +95,9 @@ def leer_comunidades(fichero):
         for j in range(i, i + num_columnas):
             valor += lista[j]
 
+        # aparece distinto en dos ficheros
+        if valor == "08 Castilla - La Mancha":
+            valor = "08 Castilla-La Mancha"
         lista_final.append(valor)
 
         i += num_columnas
