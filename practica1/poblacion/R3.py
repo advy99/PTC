@@ -75,7 +75,7 @@ def main():
 
     fichero = "entradas/comunidadesAutonomas.htm"
 
-    ruta_salida_fig = "resultados/R3.png"
+    ruta_salida_fig = "imagenes/R3.png"
 
     grafica_mas_poblada(fichero, ruta_salida_fig)
 
@@ -84,7 +84,7 @@ def main():
 
     ruta_html = "resultados/poblacionComAutonomas.html"
 
-    funciones_html.insertar_imagen_antes_tabla(ruta_html, "R3.png", 960, 540)
+    funciones_html.insertar_imagen_antes_tabla(ruta_html, "../imagenes/R3.png", 960, 540)
 
 
 

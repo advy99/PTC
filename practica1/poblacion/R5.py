@@ -5,10 +5,9 @@ import funciones_html
 import matplotlib.pyplot as plt
 import numpy as np
 import R3
+import R4
 
-def main():
-
-    fichero = "entradas/comunidadesAutonomas.htm"
+def grafica_avance_pob(fichero, salida):
     pob_com, com_mas_pobladas = R3.com_mas_pobladas(fichero)
 
     x_labels = [i for i in range(2010, 2018)]
@@ -29,11 +28,25 @@ def main():
         plt.scatter(x_labels, pob_total, label=clave)
         plt.plot(x_labels, pob_total)
 
-    plt.legend(bbox_to_anchor=(1,1), loc="upper left", fontsize=7)
+    plt.legend(bbox_to_anchor=(1,1), loc="upper left", fontsize = 4)
 
 
-    plt.show()
+    plt.savefig(salida, dpi = 400)
 
+
+
+def main():
+
+    fichero = "entradas/comunidadesAutonomas.htm"
+    ruta_salida = "imagenes/R5.png"
+
+    grafica_avance_pob(fichero, ruta_salida)
+
+    R4.main()
+
+    ruta_html = "resultados/variacionComAutonomas.html"
+
+    funciones_html.insertar_imagen_antes_tabla(ruta_html, "../imagenes/R5.png", 960, 540)
 
 
 
