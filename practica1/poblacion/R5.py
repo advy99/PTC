@@ -13,7 +13,7 @@ def grafica_avance_pob(fichero, salida):
     x_labels = [i for i in range(2010, 2018)]
 
     plt.clf()
-    plt.title("Evolución población de las 10 comunidades más pobladas")
+    plt.title("Evolución población de las 10 comunidades más pobladas", fontsize=10)
     plt.xlabel("Año")
     plt.ylabel("Población")
 
@@ -28,10 +28,10 @@ def grafica_avance_pob(fichero, salida):
         plt.scatter(x_labels, pob_total, label=clave)
         plt.plot(x_labels, pob_total)
 
-    plt.legend(bbox_to_anchor=(1,1), loc="upper left", fontsize = 4)
+    plt.legend(bbox_to_anchor=(1,1), loc="upper left", fontsize = 5)
 
 
-    plt.savefig(salida, dpi = 400)
+    plt.savefig(salida, bbox_inches = "tight", dpi = 600)
 
 
 
