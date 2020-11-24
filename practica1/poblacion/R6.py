@@ -66,9 +66,9 @@ def main():
         i += 1
 
     if son_iguales:
-        print("Todos los valores son iguales")
+        print("R6: Todos los valores son iguales")
     else:
-        print("Hay algún valor distinto")
+        print("R6: Hay algún valor distinto")
 
 
     # poblacion comunidades bis
