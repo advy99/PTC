@@ -1,16 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import R3
+import R2
 import numpy as np
 import funciones_html
 
+"""
+Ejercicio R4:
+
+Generar una página web 3 (fichero variacionComAutonomas.html) con una tabla
+con la variación de población por comunidades autónomas desde el año 2011 a
+2017, indicando variación absoluta, relativa y desagregando dicha información
+por sexos, es decir, variación absoluta (hombres, mujeres) y relativa
+(hombres, mujeres). Para los cálculos, hay que actuar de manera semejante
+que en el apartado R1.
+"""
 
 def var_pob_comunidades(fichero):
-    dicc_pob_com, _ = R3.com_mas_pobladas(fichero)
+    """
+    Funcion para calcular la variación de la población de las comunidades
+    Aunque es la misma operación que en R1, no podemos utilizar la misma funcion
+    ya que la tabla es distinta, al no ser de la poblacion total, si no
+    de la total y la separada por hombres y mujeres
+    """
+    # leemos la informacion de las comunidades
+    dicc_pob_com = R2.diccionario_pob_comunidades(fichero)
 
     dicc_var_com = {}
 
+    # para las claves, las comunidades
     for clave in dicc_pob_com:
         # como forma tendrá 7 * 3 = 21 variaciones (total, hombres y mujeres)
         # y 21 * 2, porque son variaciones en total y en absoluto
@@ -60,9 +78,11 @@ def var_pob_comunidades(fichero):
 
 def main():
 
+    # calculamos el diccionario con la variacion por comunidades
     fichero = "entradas/comunidadesAutonomas.htm"
     dicc_var_com = var_pob_comunidades(fichero)
 
+    # lo escribimos a fichero al igual que otros ejercicios
     cabecera = ["Comunidad", "Abs. T2017", "Abs. T2016", "Abs. T2015","Abs. T2014","Abs. T2013","Abs. T2012","Abs. T2011","Abs. H2017","Abs. H2016","Abs. H2015","Abs. H2014","Abs. H2013","Abs. H2012","Abs. H2011","Abs. M2017","Abs. M2016","Abs. M2015","Abs. M2014","Abs. M2013","Abs. M2012","Abs. M2011","Rel. T2017", "Rel. T2016", "Rel. T2015","Rel. T2014","Rel. T2013","Rel. T2012","Rel. T2011","Rel. H2017","Rel. H2016","Rel. H2015","Rel. H2014","Rel. H2013","Rel. H2012","Rel. H2011","Rel. M2017","Rel. M2016","Rel. M2015","Rel. M2014","Rel. M2013","Rel. M2012","Rel. M2011"]
 
     ruta_resultado = "resultados/variacionComAutonomas.html"
