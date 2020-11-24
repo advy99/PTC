@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Fichero main: Importamos y lanzamos el main de todos los ejercicios
+"""
+
 import R1
 import R2
 import R3
