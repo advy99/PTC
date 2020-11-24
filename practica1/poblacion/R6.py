@@ -1,6 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Ejercicio R6:
+
+Usando como entrada la página web 1 generada en el apartado 1 llamada
+variacionProvincias.html y el fichero proporcionado variacionProvincias2011-17.html hay que
+implementar un programa que compare los datos de variación de población de 2011 a 2017 (absoluta y
+relativa) de ambos ficheros para comprobar que son los mismos valores en cada caso. Despúes usar el
+fichero comunidadesAutonomasBis.html para generar una versión Bis de las páginas web 2 (ver R2
+y R3) y web 3 (ver R4 y R5) con sus respectivos gráficos debiendo llamarse
+poblacionComAutonomasBis.html y variacionComAutonomasBis.html respectivamente.
+"""
+
 import R1
 import R2
 import R3
@@ -11,20 +23,29 @@ import numpy as np
 
 
 def reales_iguales(a, b, epsilon = 0.005):
+    """
+    Función para comparar reales, para evitar problemas de representacion
+    """
     return abs(a - b) < epsilon
 
 def main():
 
+    # leemos las claves
     lista_claves = funciones_html.leer_tag_html("entradas/variacionProvincias2011-17.htm", "th")
 
+    # nos quedamos con las que pertenecen a datos, desde Total Nacional al final
     pos_inicio = lista_claves.index("Total Nacional")
 
     lista_claves = lista_claves[pos_inicio:]
 
+    # leemos los valores, que están almacenados en td
     lista_valores = funciones_html.leer_tag_html("entradas/variacionProvincias2011-17.htm", "td")
 
 
 
+    # para los valores, que están representados separados por puntos con miles
+    # y los decimales con comas, los transformamos para poder hacer casting
+    # al tipo float y poder trabajar con ellos
     for i in range(len(lista_valores)) :
         # lo ponemos en formato numerico, para poder pasarlo a float
         # no separamos los miles, y el separador de decimales es el . y no ,
@@ -34,6 +55,8 @@ def main():
 
     diccionario_var_html = {}
 
+    # guardamos los datos leidos del html en arrays de NumPy
+    # constan de 14 valores
     i = 0
     for clave in lista_claves:
         diccionario_var_html[clave] = np.array(lista_valores[i:i + 14], np.float64)
@@ -49,26 +72,29 @@ def main():
         claves.append(clave)
 
 
+    # miramos si hay algun valor distinto
     son_iguales = True
 
-
     i = 0
+    # para todas las claves
     while i < len(claves) and son_iguales:
         j = 0
+        # para cada elemento de cada clave
         while j < len(diccionario_sol_R1[claves[i]]) and son_iguales:
+            # miramos si son iguales
             son_iguales = reales_iguales(diccionario_sol_R1[claves[i]][j], diccionario_var_html[claves[i]][j])
 
-            if not son_iguales:
-                print(str(claves[i]) + " " + str(j) )
-                print( str(diccionario_sol_R1[claves[i]][j]) + " " + str(diccionario_var_html[claves[i]][j]) )
             j += 1
 
         i += 1
 
+    # mostramos el resultado en pantalla
     if son_iguales:
         print("R6: Todos los valores son iguales")
     else:
         print("R6: Hay algún valor distinto")
+
+
 
 
     # poblacion comunidades bis
