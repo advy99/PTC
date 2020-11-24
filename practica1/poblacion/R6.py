@@ -95,7 +95,7 @@ def main():
     # la metemos en el fichero generado antes
     ruta_html = "resultados/poblacionComAutonomasBis.html"
 
-    funciones_html.insertar_imagen_antes_tabla(ruta_html, "../imagenes/R3_bis.png", 960, 540)
+    funciones_html.insertar_imagen(ruta_html, "../imagenes/R3_bis.png", 960, 540)
 
 
 
@@ -119,7 +119,7 @@ def main():
 
     # la metemos en el fichero generado antes
 
-    funciones_html.insertar_imagen_antes_tabla(ruta_resultado, "../imagenes/R5_bis.png", 960, 540)
+    funciones_html.insertar_imagen(ruta_resultado, "../imagenes/R5_bis.png", 960, 540)
 
 
 if __name__ == "__main__":

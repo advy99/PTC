@@ -84,7 +84,7 @@ def main():
 
     ruta_html = "resultados/poblacionComAutonomas.html"
 
-    funciones_html.insertar_imagen_antes_tabla(ruta_html, "../imagenes/R3.png", 960, 540)
+    funciones_html.insertar_imagen(ruta_html, "../imagenes/R3.png", 960, 540)
 
 
 

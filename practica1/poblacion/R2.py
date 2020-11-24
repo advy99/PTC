@@ -10,7 +10,7 @@ def diccionario_pob_comunidades(fichero_comunidades):
     comunidades = funciones_html.leer_comunidades(fichero_comunidades)
 
 
-    provincias = funciones_html.leer_comunidades_y_provincias("entradas/comunidadAutonoma-Provincia.htm", comunidades)
+    provincias = funciones_html.leer_provincias("entradas/comunidadAutonoma-Provincia.htm")
 
 
 
