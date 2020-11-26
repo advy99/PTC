@@ -20,3 +20,7 @@ R3.main()
 R4.main()
 R5.main()
 R6.main()
+
+
+print("Todos los ejercicios finalizados con exito. Consulte las carpetas de resultados e imagenes para ver las salidas.")
+
