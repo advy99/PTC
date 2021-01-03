@@ -1,21 +1,60 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+import vrep
 import tkinter
+from tkinter import messagebox
+
+def conectar_vrep():
+    id_cliente = vrep.simxStart("127.0.0.1", 19999, True, True, 5000, 5)
+
+    if id_cliente != -1:
+        tkinter.messagebox.showinfo(title = "Conexión establecida",message = "Conexión con VREP establecida")
+        botonConectar["state"] = "disabled"
+        botonDesconectar["state"] = "normal"
+        botonCapturar["state"] = "normal"
+        etiquetaEstado.configure(text = "Estado: Conectado a VREP")
+    else:
+        tkinter.messagebox.showerror(title = "Error iniciar simulador" ,message = "Debe iniciar el simulador")
+
+
+
+
+def desconectar_vrep():
+    vrep.simxFinish(-1)
+
+    botonConectar["state"] = "normal"
+    botonDesconectar["state"] = "disabled"
+    botonCapturar["state"] = "disabled"
+
+    etiquetaEstado.configure(text = "Estado: No conectado a VREP")
 
 
 def main():
+
+    global root
+    global botonConectar
+    global botonDesconectar
+    global botonCapturar
+    global etiquetaEstado
+
+    for i in range(1, 7):
+        os.makedirs("positivo" + str(i), exist_ok = True)
+        os.makedirs("negativo" + str(i), exist_ok = True)
+
     root = tkinter.Tk()
     root.geometry("700x300")
 
     etiquetaInfo = tkinter.Label(root, text = "Es necesario ejecutar el simulador VREP")
     etiquetaInfo.grid(row = 0, column = 0)
 
-    botonConectar = tkinter.Button(root, text = "Conectar con VREP")
+    botonConectar = tkinter.Button(root, text = "Conectar con VREP", command = conectar_vrep)
     botonConectar.grid(row = 1, column = 0)
 
-    botonDesconectar = tkinter.Button(root, text = "Detener y desconectar VREP")
+    botonDesconectar = tkinter.Button(root, text = "Detener y desconectar VREP", command = desconectar_vrep)
     botonDesconectar.grid(row = 2, column = 0)
+    botonDesconectar["state"] = "disabled"
 
 
     etiquetaEstado = tkinter.Label(root, text = "Estado: No conectado con VREP")
@@ -23,18 +62,23 @@ def main():
 
     botonCapturar = tkinter.Button(root, text = "Capturar")
     botonCapturar.grid(row = 4, column = 0)
+    botonCapturar["state"] = "disabled"
 
     botonAgrupar = tkinter.Button(root, text = "Agrupar")
     botonAgrupar.grid(row = 5, column = 0)
+    botonAgrupar["state"] = "disabled"
 
     botonExtraerCaracteristicas = tkinter.Button(root, text = "Extraer características")
     botonExtraerCaracteristicas.grid(row = 6, column = 0)
+    botonExtraerCaracteristicas["state"] = "disabled"
 
     botonEntrenar = tkinter.Button(root, text = "Entrenar clasificador")
     botonEntrenar.grid(row = 7, column = 0)
+    botonEntrenar["state"] = "disabled"
 
     botonPredecir = tkinter.Button(root, text = "Predecir")
     botonPredecir.grid(row = 8, column = 0)
+    botonPredecir["state"] = "disabled"
 
     botonSalir = tkinter.Button(root, text = "Salir")
     botonSalir.grid(row = 9, column = 0)
@@ -95,13 +139,15 @@ def main():
 
 
 
-
-
     etiquetaFicheros = tkinter.Label(root, text = "Fichero para la captura")
     etiquetaFicheros.grid(row = 1, column = 3)
+
+    listaFicheros = tkinter.Listbox(root, width = 32, height = 12)
+
 
 
     root.mainloop()
 
 
-main()
+if __name__ == "__main__":
+    main()
