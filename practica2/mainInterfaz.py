@@ -44,14 +44,32 @@ def cambiar_parametros():
     Parametros.max_puntos = entrada_maxpuntos.get()
     Parametros.umbral_distancia = entrada_umbral_distancia.get()
 
-    print("Nuevos parámetros:")
-    print("\tIteraciones: ", Parametros.iteraciones)
-    print("\tCerca: ", Parametros.cerca)
-    print("\tMedia: ", Parametros.media)
-    print("\tLejos: ", Parametros.lejos)
-    print("\tMinPuntos: ", Parametros.min_puntos)
-    print("\tMaxPuntos: ", Parametros.max_puntos)
-    print("\tUmbralDistancia: ", Parametros.umbral_distancia)
+    mensaje = """
+    Nuevos parámetros:
+    \tIteraciones: {}
+    \tCerca: {}
+    \tMedia: {}
+    \tLejos: {}
+    \tMinPuntos: {}
+    \tMaxPuntos: {}
+    \tUmbralDistancia: {}
+    """.format(Parametros.iteraciones, Parametros.cerca, Parametros.media, Parametros.lejos, Parametros.min_puntos, Parametros.max_puntos, Parametros.umbral_distancia)
+
+    print(mensaje)
+
+    tkinter.messagebox.showinfo(title = "Actualizados parametros",message = mensaje)
+
+
+def capturar():
+
+    seleccionados = lista_ficheros.curselection()
+
+    if len(seleccionados) == 0:
+        tkinter.messagebox.showwarning(title = "Seleccion erronea",message = "Debe elegir un fichero de la lista")
+    else:
+        print (seleccionados)
+
+
 
 
 
@@ -69,6 +87,7 @@ def main():
     global entrada_minpuntos
     global entrada_maxpuntos
     global entrada_umbral_distancia
+    global lista_ficheros
 
     for i in range(1, 7):
         os.makedirs("positivo" + str(i), exist_ok = True)
@@ -91,7 +110,7 @@ def main():
     etiqueta_estado = tkinter.Label(root, text = "Estado: No conectado con VREP")
     etiqueta_estado.grid(row = 3, column = 0)
 
-    boton_capturar = tkinter.Button(root, text = "Capturar")
+    boton_capturar = tkinter.Button(root, text = "Capturar", command = capturar)
     boton_capturar.grid(row = 4, column = 0)
     boton_capturar["state"] = "disabled"
 
@@ -180,7 +199,7 @@ def main():
     etiqueta_ficheros = tkinter.Label(root, text = "Fichero para la captura")
     etiqueta_ficheros.grid(row = 1, column = 3)
 
-    lista_ficheros = tkinter.Listbox(root, width = 32, height = 12)
+    lista_ficheros = tkinter.Listbox(root, width = 32, height = 12, selectmode = tkinter.SINGLE)
     lista_ficheros.insert(1, "positivo1/enPieCerca.json")
     lista_ficheros.insert(2, "positivo2/enPieMedia.json")
     lista_ficheros.insert(3, "positivo3/enPieLejos.json")
