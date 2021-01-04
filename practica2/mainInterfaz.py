@@ -181,6 +181,19 @@ def main():
     etiqueta_ficheros.grid(row = 1, column = 3)
 
     lista_ficheros = tkinter.Listbox(root, width = 32, height = 12)
+    lista_ficheros.insert(1, "positivo1/enPieCerca.json")
+    lista_ficheros.insert(2, "positivo2/enPieMedia.json")
+    lista_ficheros.insert(3, "positivo3/enPieLejos.json")
+    lista_ficheros.insert(4, "positivo4/sentadoCerca.json")
+    lista_ficheros.insert(5, "positivo5/sentadoMedia.json")
+    lista_ficheros.insert(6, "positivo6/sentadoLejos.json")
+    lista_ficheros.insert(7, "negativo1/cilindroMenorCerca.json")
+    lista_ficheros.insert(8, "negativo2/cilindroMenorMedia.json")
+    lista_ficheros.insert(9, "negativo3/cilindroMenorLejos.json")
+    lista_ficheros.insert(10, "negativo4/cilindroMayorCerca.json")
+    lista_ficheros.insert(11, "negativo5/cilindroMayorMedia.json")
+    lista_ficheros.insert(12, "negativo6/cilindroMayorLejos.json")
+    lista_ficheros.grid(row = 2, column = 3, rowspan = 12)
 
 
 
