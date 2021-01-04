@@ -5,16 +5,18 @@ import os
 import vrep
 import tkinter
 from tkinter import messagebox
+from parametros import Parametros
 
 def conectar_vrep():
+    vrep.simxFinish(-1)
     id_cliente = vrep.simxStart("127.0.0.1", 19999, True, True, 5000, 5)
 
     if id_cliente != -1:
         tkinter.messagebox.showinfo(title = "Conexión establecida",message = "Conexión con VREP establecida")
-        botonConectar["state"] = "disabled"
-        botonDesconectar["state"] = "normal"
-        botonCapturar["state"] = "normal"
-        etiquetaEstado.configure(text = "Estado: Conectado a VREP")
+        boton_conectar["state"] = "disabled"
+        boton_desconectar["state"] = "normal"
+        boton_capturar["state"] = "normal"
+        etiqueta_estado.configure(text = "Estado: Conectado a VREP")
     else:
         tkinter.messagebox.showerror(title = "Error iniciar simulador" ,message = "Debe iniciar el simulador")
 
@@ -24,20 +26,49 @@ def conectar_vrep():
 def desconectar_vrep():
     vrep.simxFinish(-1)
 
-    botonConectar["state"] = "normal"
-    botonDesconectar["state"] = "disabled"
-    botonCapturar["state"] = "disabled"
+    boton_conectar["state"] = "normal"
+    boton_desconectar["state"] = "disabled"
+    boton_capturar["state"] = "disabled"
 
-    etiquetaEstado.configure(text = "Estado: No conectado a VREP")
+    etiqueta_estado.configure(text = "Estado: No conectado a VREP")
+
+    tkinter.messagebox.showinfo(title = "Conexión cerrada",message = "Se ha desconectado de VREP")
+
+
+def cambiar_parametros():
+    Parametros.iteraciones = entrada_iteraciones.get()
+    Parametros.cerca = entrada_cerca.get()
+    Parametros.media = entrada_media.get()
+    Parametros.lejos = entrada_lejos.get()
+    Parametros.min_puntos = entrada_minpuntos.get()
+    Parametros.max_puntos = entrada_maxpuntos.get()
+    Parametros.umbral_distancia = entrada_umbral_distancia.get()
+
+    print("Nuevos parámetros:")
+    print("\tIteraciones: ", Parametros.iteraciones)
+    print("\tCerca: ", Parametros.cerca)
+    print("\tMedia: ", Parametros.media)
+    print("\tLejos: ", Parametros.lejos)
+    print("\tMinPuntos: ", Parametros.min_puntos)
+    print("\tMaxPuntos: ", Parametros.max_puntos)
+    print("\tUmbralDistancia: ", Parametros.umbral_distancia)
+
 
 
 def main():
 
     global root
-    global botonConectar
-    global botonDesconectar
-    global botonCapturar
-    global etiquetaEstado
+    global boton_conectar
+    global boton_desconectar
+    global boton_capturar
+    global etiqueta_estado
+    global entrada_iteraciones
+    global entrada_cerca
+    global entrada_media
+    global entrada_lejos
+    global entrada_minpuntos
+    global entrada_maxpuntos
+    global entrada_umbral_distancia
 
     for i in range(1, 7):
         os.makedirs("positivo" + str(i), exist_ok = True)
@@ -46,103 +77,110 @@ def main():
     root = tkinter.Tk()
     root.geometry("700x300")
 
-    etiquetaInfo = tkinter.Label(root, text = "Es necesario ejecutar el simulador VREP")
-    etiquetaInfo.grid(row = 0, column = 0)
+    etiqueta_info = tkinter.Label(root, text = "Es necesario ejecutar el simulador VREP")
+    etiqueta_info.grid(row = 0, column = 0)
 
-    botonConectar = tkinter.Button(root, text = "Conectar con VREP", command = conectar_vrep)
-    botonConectar.grid(row = 1, column = 0)
+    boton_conectar = tkinter.Button(root, text = "Conectar con VREP", command = conectar_vrep)
+    boton_conectar.grid(row = 1, column = 0)
 
-    botonDesconectar = tkinter.Button(root, text = "Detener y desconectar VREP", command = desconectar_vrep)
-    botonDesconectar.grid(row = 2, column = 0)
-    botonDesconectar["state"] = "disabled"
-
-
-    etiquetaEstado = tkinter.Label(root, text = "Estado: No conectado con VREP")
-    etiquetaEstado.grid(row = 3, column = 0)
-
-    botonCapturar = tkinter.Button(root, text = "Capturar")
-    botonCapturar.grid(row = 4, column = 0)
-    botonCapturar["state"] = "disabled"
-
-    botonAgrupar = tkinter.Button(root, text = "Agrupar")
-    botonAgrupar.grid(row = 5, column = 0)
-    botonAgrupar["state"] = "disabled"
-
-    botonExtraerCaracteristicas = tkinter.Button(root, text = "Extraer características")
-    botonExtraerCaracteristicas.grid(row = 6, column = 0)
-    botonExtraerCaracteristicas["state"] = "disabled"
-
-    botonEntrenar = tkinter.Button(root, text = "Entrenar clasificador")
-    botonEntrenar.grid(row = 7, column = 0)
-    botonEntrenar["state"] = "disabled"
-
-    botonPredecir = tkinter.Button(root, text = "Predecir")
-    botonPredecir.grid(row = 8, column = 0)
-    botonPredecir["state"] = "disabled"
-
-    botonSalir = tkinter.Button(root, text = "Salir")
-    botonSalir.grid(row = 9, column = 0)
+    boton_desconectar = tkinter.Button(root, text = "Detener y desconectar VREP", command = desconectar_vrep)
+    boton_desconectar.grid(row = 2, column = 0)
+    boton_desconectar["state"] = "disabled"
 
 
+    etiqueta_estado = tkinter.Label(root, text = "Estado: No conectado con VREP")
+    etiqueta_estado.grid(row = 3, column = 0)
 
-    etiquetaParametros = tkinter.Label(root, text = "Parámetros")
-    etiquetaParametros.grid(row = 1, column = 1)
+    boton_capturar = tkinter.Button(root, text = "Capturar")
+    boton_capturar.grid(row = 4, column = 0)
+    boton_capturar["state"] = "disabled"
 
+    boton_agrupar = tkinter.Button(root, text = "Agrupar")
+    boton_agrupar.grid(row = 5, column = 0)
+    boton_agrupar["state"] = "disabled"
 
-    etiquetaIteraciones = tkinter.Label(root, text = "Iteraciones:")
-    etiquetaIteraciones.grid( row = 2, column = 1)
+    boton_extraer_caracteristicas = tkinter.Button(root, text = "Extraer características")
+    boton_extraer_caracteristicas.grid(row = 6, column = 0)
+    boton_extraer_caracteristicas["state"] = "disabled"
 
-    entradaIteraciones = tkinter.Entry(root)
-    entradaIteraciones.grid(sticky = "E", row = 2, column = 2)
+    boton_entrenar = tkinter.Button(root, text = "Entrenar clasificador")
+    boton_entrenar.grid(row = 7, column = 0)
+    boton_entrenar["state"] = "disabled"
 
+    boton_predecir = tkinter.Button(root, text = "Predecir")
+    boton_predecir.grid(row = 8, column = 0)
+    boton_predecir["state"] = "disabled"
 
-    etiquetaCerca = tkinter.Label(root, text = "Cerca:")
-    etiquetaCerca.grid( row = 3, column = 1)
-
-    entradaCerca = tkinter.Entry(root)
-    entradaCerca.grid(sticky = "E", row = 3, column = 2)
-
-    etiquetaMedia = tkinter.Label(root, text = "Media:")
-    etiquetaMedia.grid( row = 4, column = 1)
-
-    entradaMedia = tkinter.Entry(root)
-    entradaMedia.grid(sticky = "E", row = 4, column = 2)
-
-    etiquetaLejos = tkinter.Label(root, text = "Lejos:")
-    etiquetaLejos.grid( row = 5, column = 1)
-
-    entradaLejos = tkinter.Entry(root)
-    entradaLejos.grid(sticky = "E", row = 5, column = 2)
-
-
-    etiquetaMinPuntos = tkinter.Label(root, text = "MinPuntos:")
-    etiquetaMinPuntos.grid( row = 6, column = 1)
-
-    entradaMinPuntos = tkinter.Entry(root)
-    entradaMinPuntos.grid(sticky = "E", row = 6, column = 2)
-
-    etiquetaMaxPuntos = tkinter.Label(root, text = "MaxPuntos:")
-    etiquetaMaxPuntos.grid( row = 7, column = 1)
-
-    entradaMaxPuntos = tkinter.Entry(root)
-    entradaMaxPuntos.grid(sticky = "E", row = 7, column = 2)
-
-    etiquetaUmbralDistancia = tkinter.Label(root, text = "UmbralDistancia:")
-    etiquetaUmbralDistancia.grid( row = 8, column = 1)
-
-    entradaUmbralPuntos = tkinter.Entry(root)
-    entradaUmbralPuntos.grid(sticky = "E", row = 8, column = 2)
-
-    botonCambiar = tkinter.Button(root, text = "Cambiar")
-    botonCambiar.grid(row = 9, column = 1)
+    boton_salir = tkinter.Button(root, text = "Salir")
+    boton_salir.grid(row = 9, column = 0)
 
 
 
+    etiqueta_parametros = tkinter.Label(root, text = "Parámetros")
+    etiqueta_parametros.grid(row = 1, column = 1)
 
-    etiquetaFicheros = tkinter.Label(root, text = "Fichero para la captura")
-    etiquetaFicheros.grid(row = 1, column = 3)
 
-    listaFicheros = tkinter.Listbox(root, width = 32, height = 12)
+    etiqueta_iteraciones = tkinter.Label(root, text = "Iteraciones:")
+    etiqueta_iteraciones.grid( row = 2, column = 1)
+
+    entrada_iteraciones = tkinter.Entry(root)
+    entrada_iteraciones.grid(sticky = "E", row = 2, column = 2)
+    entrada_iteraciones.insert(0, Parametros.iteraciones)
+
+
+    etiqueta_cerca = tkinter.Label(root, text = "Cerca:")
+    etiqueta_cerca.grid( row = 3, column = 1)
+
+    entrada_cerca = tkinter.Entry(root)
+    entrada_cerca.grid(sticky = "E", row = 3, column = 2)
+    entrada_cerca.insert(0, Parametros.cerca)
+
+    etiqueta_media = tkinter.Label(root, text = "Media:")
+    etiqueta_media.grid( row = 4, column = 1)
+
+    entrada_media = tkinter.Entry(root)
+    entrada_media.grid(sticky = "E", row = 4, column = 2)
+    entrada_media.insert(0, Parametros.media)
+
+    etiqueta_lejos = tkinter.Label(root, text = "Lejos:")
+    etiqueta_lejos.grid( row = 5, column = 1)
+
+    entrada_lejos = tkinter.Entry(root)
+    entrada_lejos.grid(sticky = "E", row = 5, column = 2)
+    entrada_lejos.insert(0, Parametros.lejos)
+
+
+    etiqueta_minpuntos = tkinter.Label(root, text = "MinPuntos:")
+    etiqueta_minpuntos.grid( row = 6, column = 1)
+
+    entrada_minpuntos = tkinter.Entry(root)
+    entrada_minpuntos.grid(sticky = "E", row = 6, column = 2)
+    entrada_minpuntos.insert(0, Parametros.min_puntos)
+
+    etiqueta_maxpuntos = tkinter.Label(root, text = "MaxPuntos:")
+    etiqueta_maxpuntos.grid( row = 7, column = 1)
+
+    entrada_maxpuntos = tkinter.Entry(root)
+    entrada_maxpuntos.grid(sticky = "E", row = 7, column = 2)
+    entrada_maxpuntos.insert(0, Parametros.max_puntos)
+
+    etiqueta_umbral_distancia = tkinter.Label(root, text = "UmbralDistancia:")
+    etiqueta_umbral_distancia.grid( row = 8, column = 1)
+
+    entrada_umbral_distancia = tkinter.Entry(root)
+    entrada_umbral_distancia.grid(sticky = "E", row = 8, column = 2)
+    entrada_umbral_distancia.insert(0, Parametros.umbral_distancia)
+
+    boton_cambiar = tkinter.Button(root, text = "Cambiar", command = cambiar_parametros)
+    boton_cambiar.grid(row = 9, column = 1)
+
+
+
+
+    etiqueta_ficheros = tkinter.Label(root, text = "Fichero para la captura")
+    etiqueta_ficheros.grid(row = 1, column = 3)
+
+    lista_ficheros = tkinter.Listbox(root, width = 32, height = 12)
 
 
 
