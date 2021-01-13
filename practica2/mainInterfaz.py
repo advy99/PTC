@@ -67,7 +67,15 @@ def capturar():
     if len(seleccionados) == 0:
         tkinter.messagebox.showwarning(title = "Seleccion erronea",message = "Debe elegir un fichero de la lista")
     else:
-        print (seleccionados)
+        archivo = lista_ficheros.get(seleccionados[0])
+
+        respuesta = ""
+
+        if os.path.isfile(archivo):
+            respuesta = tkinter.messagebox.askyesno(title = "Confirmación sobreescribir fichero", message = "Se va a sobreescribir el fichero :\n {} ¿Estás seguro?".format(archivo))
+        else:
+            respuesta = tkinter.messagebox.askyesno(title = "Confirmación creación fichero", message = "Se va a crear el fichero :\n {} ¿Estás seguro?".format(archivo))
+
 
 
 
