@@ -31,7 +31,6 @@ def capturarPositivos(fichero, id_cliente):
 
     fichero_laser.write(json.dumps(cabecera)+'\n')
 
-    
 
     distancia = 0.0
     a_recorrer = 0.0
@@ -46,7 +45,12 @@ def capturarPositivos(fichero, id_cliente):
         distancia = Parametros.media + a_recorrer
     elif re.findall("Lejos", fichero):
         vrep.simxSetObjectPosition(id_cliente,personhandle, -1,[Parametros.lejos, 0, 0.0], vrep.simx_opmode_oneshot)
+        a_recorrer = 1
         distancia = Parametros.lejos + 1
+    
+    # colocamos a BIll en la posicion inical
+    returnCode = vrep.simxSetObjectPosition(id_cliente, personhandle, -1, [distancia , 0.0, 0.0], vrep.simx_opmode_oneshot)
+
     
     for i in range(1, Parametros.iteraciones):
         #listas para recibir las coordenadas x, y z de los puntos detectados por el laser
@@ -54,7 +58,7 @@ def capturarPositivos(fichero, id_cliente):
         puntosy = []
         puntosz = []
         
-        returnCode, signalValue = vrep.simxGetStringSignal(id_cliente,'Vision_sensor',vrep.simx_opmode_buffer)
+        returnCode, signalValue = vrep.simxGetStringSignal(id_cliente,'LaserData',vrep.simx_opmode_buffer)
         
         #esperamos un tiempo para que el ciclo de lectura de datos no sea muy rápido
         time.sleep(segundos) 
