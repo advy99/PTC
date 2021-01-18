@@ -76,7 +76,9 @@ def capturar():
         else:
             respuesta = tkinter.messagebox.askyesno(title = "Confirmación creación fichero", message = "Se va a crear el fichero :\n {} ¿Estás seguro?".format(archivo))
 
-
+        if respuesta == "yes":
+            capturar.main(fichero)
+			
 
 
 
