@@ -10,6 +10,12 @@ import capturar
 import glob
 
 def conectar_vrep():
+    global id_cliente
+    global boton_conectar
+    global boton_desconectar
+    global boton_capturar
+    global etiqueta_estado
+    
     vrep.simxFinish(-1)
     id_cliente = vrep.simxStart("127.0.0.1", 19999, True, True, 5000, 5)
 
@@ -22,12 +28,20 @@ def conectar_vrep():
     else:
         tkinter.messagebox.showerror(title = "Error iniciar simulador" ,message = "Debe iniciar el simulador")
 
+    print(id_cliente)
 
 
 
 def desconectar_vrep():
+    global boton_conectar
+    global boton_desconectar
+    global boton_capturar
+    global etiqueta_estado
+    global id_cliente
+    
     vrep.simxFinish(-1)
 
+    id_cliente = -1
     boton_conectar["state"] = "normal"
     boton_desconectar["state"] = "disabled"
     boton_capturar["state"] = "disabled"
@@ -38,6 +52,14 @@ def desconectar_vrep():
 
 
 def cambiar_parametros():
+    global entrada_cerca
+    global entrada_media
+    global entrada_lejos
+    global entrada_iteraciones
+    global entrada_minpuntos
+    global entrada_maxpuntos
+    global entrada_umbral_distancia
+    
     Parametros.iteraciones = entrada_iteraciones.get()
     Parametros.cerca = entrada_cerca.get()
     Parametros.media = entrada_media.get()
@@ -63,6 +85,7 @@ def cambiar_parametros():
 
 
 def funcion_capturar():
+    global lista_ficheros
 
     seleccionados = lista_ficheros.curselection()
 
