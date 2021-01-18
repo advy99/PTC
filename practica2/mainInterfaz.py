@@ -6,6 +6,8 @@ import vrep
 import tkinter
 from tkinter import messagebox
 from parametros import Parametros
+import capturar
+import glob
 
 def conectar_vrep():
     vrep.simxFinish(-1)
@@ -60,7 +62,7 @@ def cambiar_parametros():
     tkinter.messagebox.showinfo(title = "Actualizados parametros",message = mensaje)
 
 
-def capturar():
+def funcion_capturar():
 
     seleccionados = lista_ficheros.curselection()
 
@@ -76,9 +78,12 @@ def capturar():
         else:
             respuesta = tkinter.messagebox.askyesno(title = "Confirmación creación fichero", message = "Se va a crear el fichero :\n {} ¿Estás seguro?".format(archivo))
 
-        if respuesta == "yes":
-            capturar.main(fichero)
-			
+        if respuesta:
+            es_positivos = archivo[0:3] == "pos"
+            if es_positivos:
+                capturar.capturarPositivos(archivo, id_cliente)
+            else:
+                capturar.capturarNegativos(archivo, id_cliente)
 
 
 
@@ -98,6 +103,9 @@ def main():
     global entrada_maxpuntos
     global entrada_umbral_distancia
     global lista_ficheros
+    global id_cliente
+    
+    id_cliente = -1
 
     for i in range(1, 7):
         os.makedirs("positivo" + str(i), exist_ok = True)
@@ -120,7 +128,7 @@ def main():
     etiqueta_estado = tkinter.Label(root, text = "Estado: No conectado con VREP")
     etiqueta_estado.grid(row = 3, column = 0)
 
-    boton_capturar = tkinter.Button(root, text = "Capturar", command = capturar)
+    boton_capturar = tkinter.Button(root, text = "Capturar", command = funcion_capturar)
     boton_capturar.grid(row = 4, column = 0)
     boton_capturar["state"] = "disabled"
 
