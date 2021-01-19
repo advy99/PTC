@@ -97,6 +97,9 @@ def cambiar_parametros():
 def funcion_capturar():
     global lista_ficheros
     global id_cliente
+    global ficheros_capturados
+    global boton_agrupar
+
 
     seleccionados = lista_ficheros.curselection()
 
@@ -119,8 +122,14 @@ def funcion_capturar():
             else:
                 capturar.capturarNegativos(archivo, id_cliente)
 
+            ficheros_capturados.append(archivo)
+            
+            apariciones_unicas = [i for i in ficheros_capturados if ficheros_capturados.count(i) == 1]
+        
+            if len(apariciones_unicas) == 12:
+                boton_agrupar["state"] = "normal"
 
-
+                
 
 def main():
 
@@ -138,6 +147,9 @@ def main():
     global entrada_umbral_distancia
     global lista_ficheros
     global id_cliente
+    global ficheros_capturados
+    
+    ficheros_capturados = []
     
     id_cliente = -1
 
