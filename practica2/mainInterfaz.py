@@ -8,7 +8,19 @@ from tkinter import messagebox
 from parametros import Parametros
 import capturar
 import glob
+import sys
 
+
+def salir():
+    global id_cliente
+    
+    if id_cliente != -1:
+        tkinter.messagebox.showwarning(title = "No puede salir", message = "Antes de salir debe cerrar la conexión con VREP")
+    else:
+        respuesta = tkinter.messagebox.askyesno(title = "Confirmación salir", message = "¿Está seguro de que quiere salir?")
+        if respuesta:
+            sys.exit()
+            
 def conectar_vrep():
     global id_cliente
     global boton_conectar
@@ -170,7 +182,7 @@ def main():
     boton_predecir.grid(row = 8, column = 0)
     boton_predecir["state"] = "disabled"
 
-    boton_salir = tkinter.Button(root, text = "Salir")
+    boton_salir = tkinter.Button(root, text = "Salir", command = salir)
     boton_salir.grid(row = 9, column = 0)
 
 
