@@ -7,10 +7,6 @@ import numpy as np
 from parametros import Parametros
 import math
 
-Parametros.min_puntos = 3
-Parametros.max_puntos = 13
-Parametros.umbral_distancia = 3
-
 def clusters_muestra(muestra):
     
     
@@ -75,26 +71,21 @@ def volcar_clusters(salida_json, clusters):
     
     i = 0
 
-    for i in range(len(clusters)):
-        print("\n\n")
-            
-        #salida = {"numero_cluster":i, "numero_puntos":len(clusters[i]), "puntosX":list(clusters[i][:][0]), "puntosY":list(clusters[i][:][1])}
+    for cluster in clusters:
+        cluster_np = np.array(cluster)
+        if len(cluster_np) != 0:
+            salida = {"numero_cluster":i, "numero_puntos":len(cluster), "puntosX":list(cluster_np[:, 0]), "puntosY":list(cluster_np[:, 1])}
+            fichero_salida.write(json.dumps(salida) + '\n')
+            i += 1
 
-        #fichero_salida.write(json.dumps(salida) + '\n')
-    
     fichero_salida.close
 
 def agrupar():
-    
     directoriosPositivos = sorted(glob.glob("positivo?/*.json"))
     clusters_positivos = agrupar_clusters(directoriosPositivos)
     volcar_clusters("clustersPiernas.json", clusters_positivos)
     
     directoriosNegativos = sorted(glob.glob("negativo?/*.json"))
-
+    clusters_negativos = agrupar_clusters(directoriosNegativos)
+    volcar_clusters("clustersNoPiernas.json", clusters_negativos)
     
-    print(directoriosNegativos)
-    print(directoriosPositivos)
-
-
-agrupar()
