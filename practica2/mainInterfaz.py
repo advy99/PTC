@@ -28,8 +28,6 @@ def conectar_vrep():
     else:
         tkinter.messagebox.showerror(title = "Error iniciar simulador" ,message = "Debe iniciar el simulador")
 
-    print(id_cliente)
-
 
 
 def desconectar_vrep():
@@ -86,6 +84,7 @@ def cambiar_parametros():
 
 def funcion_capturar():
     global lista_ficheros
+    global id_cliente
 
     seleccionados = lista_ficheros.curselection()
 
