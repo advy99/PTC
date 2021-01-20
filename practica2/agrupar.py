@@ -23,7 +23,9 @@ def clusters_muestra(muestra):
     while i < len(puntos):
         j = i
         # metemos en el inicial el cluster actual
-        cluster = [list(puntos[j])]
+        cluster = []
+        cluster += [puntos[j]]
+
         he_pasado_umbral = False
         
         # mientras no me pase del umbral, no haya llegado al máximo de puntos, y me queden puntos
@@ -31,17 +33,17 @@ def clusters_muestra(muestra):
             distancia = math.hypot(puntos[j+1,0] - puntos[j,0], puntos[j+1,1] - puntos[j,0] )
             # si la distancia con el siguiente es menor o igual, lo meto en el cluster
             if distancia <= Parametros.umbral_distancia:
-                cluster.append(list(puntos[j + 1]))
+                cluster += [puntos[j + 1]]
             else:
                 he_pasado_umbral = True
             j += 1
         
         # si tengo min_puntos, acepto el cluster
         if len(cluster) >= Parametros.min_puntos:
-            todos_clusters += cluster
+            todos_clusters.append(cluster)
             
         i = j + 2
-    
+
     return todos_clusters
     
 
@@ -71,9 +73,9 @@ def volcar_clusters(salida_json, clusters):
     
     i = 0
     for cluster in clusters:
-        cluster_np = np.array(cluster)
-        if len(cluster_np) != 0:
-            salida = {"numero_cluster":i, "numero_puntos":len(cluster), "puntosX":list(cluster_np[:, 0]), "puntosY":list(cluster_np[:, 1])}
+        if len(cluster) != 0:
+            cluster_np = np.array(cluster[0])
+            salida = {"numero_cluster":i, "numero_puntos":len(cluster_np), "puntosX":list(cluster_np[:, 0]), "puntosY":list(cluster_np[:, 1])}
             fichero_salida.write(json.dumps(salida) + '\n')
             i += 1
 
