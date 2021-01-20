@@ -12,4 +12,26 @@ from sklearn.model_selection import GridSearchCV
 import pickle
 
 
+# ignoramos warnings, como en el ejemplo
+from warnings import simplefilter
+simplefilter(action='ignore', category=FutureWarning)
+simplefilter(action='ignore', category=DeprecationWarning)
+
+
+
+
+def clasificar_piernas():
+    
+    columnas = ["perimetro", "profundidad", "anchura", "clase"]
+    
+    datos_piernas = pd.read_csv("piernasDataset.csv", names=colnames)
+
+    datos_x = datos_piernas.drop("clase", axis = 1)
+    datos_y = datos_piernas["clase"]
+    
+    # dividimos train y test, 20% de test
+    x_train, x_test, y_train, y_test = train_test_split(datos_x, datos_y, test_size = 0.20, random_state=25)
+
+
+
 
