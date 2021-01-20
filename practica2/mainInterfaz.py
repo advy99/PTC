@@ -9,7 +9,10 @@ from parametros import Parametros
 import capturar
 import glob
 import sys
-
+import agrupar
+import caracteristicas
+import clasificarSVM
+import predecir
 
 def salir():
     global id_cliente
@@ -131,6 +134,28 @@ def funcion_capturar():
 
                 
 
+def funcion_agrupar():
+    global boton_agrupar
+    global boton_extraer_caracteristicas
+    
+    agrupar.agrupar()
+    
+    boton_extraer_caracteristicas[state] = "normal"
+    
+def funcion_entrenar_clasificador():
+    global boton_entrenar
+    global boton_predecir
+    
+    clasificarSVM.clasificar_piernas()
+    
+    boton_predecir[state] = "normal"
+    
+    
+def funcion_predecir():
+    global id_cliente
+    
+    predecir.predecir_escena(id_cliente)
+
 def main():
 
     global root
@@ -138,6 +163,9 @@ def main():
     global boton_desconectar
     global boton_capturar
     global boton_agrupar
+    global boton_extraer_caracteristicas
+    global boton_predecir
+    global boton_entrenar
     global etiqueta_estado
     global entrada_iteraciones
     global entrada_cerca
@@ -182,7 +210,7 @@ def main():
     boton_capturar.grid(row = 4, column = 0)
     boton_capturar["state"] = "disabled"
 
-    boton_agrupar = tkinter.Button(root, text = "Agrupar")
+    boton_agrupar = tkinter.Button(root, text = "Agrupar", command = funcion_agrupar)
     boton_agrupar.grid(row = 5, column = 0)
     boton_agrupar["state"] = "disabled"
 

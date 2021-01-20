@@ -100,4 +100,3 @@ def caracteristicas():
     calcular_caracteristicas("clustersNoPiernas.json", "caracteristicasNoPiernas.dat", 0)
     
     crear_csv_caracteristicas(["caracteristicasPiernas.dat", "caracteristicasNoPiernas.dat"], "piernasDataset.csv")
-
