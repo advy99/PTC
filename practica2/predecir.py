@@ -82,11 +82,4 @@ def predecir_escena(id_cliente):
             
             print(prediccion)
 
-Parametros.min_puntos = 3
-Parametros.max_puntos = 25
-Parametros.umbral_distancia = 3
-vrep.simxFinish(-1)
-id_cliente = vrep.simxStart("127.0.0.1", 19999, True, True, 5000, 5)
-predecir_escena(id_cliente)
-
 
