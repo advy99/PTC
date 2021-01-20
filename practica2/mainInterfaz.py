@@ -73,13 +73,13 @@ def cambiar_parametros():
     global entrada_maxpuntos
     global entrada_umbral_distancia
     
-    Parametros.iteraciones = entrada_iteraciones.get()
-    Parametros.cerca = entrada_cerca.get()
-    Parametros.media = entrada_media.get()
-    Parametros.lejos = entrada_lejos.get()
-    Parametros.min_puntos = entrada_minpuntos.get()
-    Parametros.max_puntos = entrada_maxpuntos.get()
-    Parametros.umbral_distancia = entrada_umbral_distancia.get()
+    Parametros.iteraciones = int(entrada_iteraciones.get())
+    Parametros.cerca = float(entrada_cerca.get())
+    Parametros.media = float(entrada_media.get())
+    Parametros.lejos = float(entrada_lejos.get())
+    Parametros.min_puntos = float(entrada_minpuntos.get())
+    Parametros.max_puntos = float(entrada_maxpuntos.get())
+    Parametros.umbral_distancia = float(entrada_umbral_distancia.get())
 
     mensaje = """
     Nuevos parámetros:
@@ -128,7 +128,6 @@ def funcion_capturar():
             ficheros_capturados.append(archivo)
             
             apariciones_unicas = [i for i in ficheros_capturados if ficheros_capturados.count(i) == 1]
-        
             if len(apariciones_unicas) == 12:
                 boton_agrupar["state"] = "normal"
 
@@ -140,7 +139,7 @@ def funcion_agrupar():
     
     agrupar.agrupar()
     
-    boton_extraer_caracteristicas[state] = "normal"
+    boton_extraer_caracteristicas["state"] = "normal"
     
 def funcion_entrenar_clasificador():
     global boton_entrenar
@@ -148,8 +147,16 @@ def funcion_entrenar_clasificador():
     
     clasificarSVM.clasificar_piernas()
     
-    boton_predecir[state] = "normal"
+    boton_predecir["state"] = "normal"
     
+    
+def funcion_caracteristicas():
+    global boton_entrenar
+    
+    caracteristicas.caracteristicas()
+    
+    boton_entrenar["state"] = "normal"
+
     
 def funcion_predecir():
     global id_cliente
@@ -214,15 +221,15 @@ def main():
     boton_agrupar.grid(row = 5, column = 0)
     boton_agrupar["state"] = "disabled"
 
-    boton_extraer_caracteristicas = tkinter.Button(root, text = "Extraer características")
+    boton_extraer_caracteristicas = tkinter.Button(root, text = "Extraer características", command = funcion_caracteristicas)
     boton_extraer_caracteristicas.grid(row = 6, column = 0)
     boton_extraer_caracteristicas["state"] = "disabled"
 
-    boton_entrenar = tkinter.Button(root, text = "Entrenar clasificador")
+    boton_entrenar = tkinter.Button(root, text = "Entrenar clasificador", command = funcion_entrenar_clasificador)
     boton_entrenar.grid(row = 7, column = 0)
     boton_entrenar["state"] = "disabled"
 
-    boton_predecir = tkinter.Button(root, text = "Predecir")
+    boton_predecir = tkinter.Button(root, text = "Predecir", command = funcion_predecir)
     boton_predecir.grid(row = 8, column = 0)
     boton_predecir["state"] = "disabled"
 

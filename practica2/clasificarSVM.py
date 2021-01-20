@@ -32,7 +32,7 @@ def entrenar_modelo(datos_x, datos_y, x_train, y_train, x_test, y_test, svc):
     
     
     # predicciones con validación cruzada:
-    scores = cross_val_score(svc, x_test, y_test, cv=5, n_jobs=-1)
+    scores = cross_val_score(svc, x_test, y_test, cv=2, n_jobs=-1)
 
     # exactitud media con intervalo de confianza del 95%
     print("Accuracy 5-cross validation: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
@@ -100,18 +100,23 @@ def clasificar_piernas():
     if comparar_reales(mejor_score, scores_rbf.mean() ):
         print("El mejor estimador es SVC con el kernel RBF con los siguientes parámetros: ")
         print(grid_rbf.best_params_)
+        mejor_score = scores_rbf
         grid_search = grid_rbf
     elif comparar_reales(mejor_score, scores_linear.mean()):
         print("El mejor estimador es SVC con el kernel linear: ")
+        mejor_score = scores_linear
         grid_search = svc_linear
     elif comparar_reales(mejor_score, scores_poly_2.mean()):
         print("El mejor estimador es SVC con el kernel polinomico de grado 2 ")
+        mejor_score = scores_poly_2
         grid_search = svc_poly_2
     elif comparar_reales(mejor_score, scores_poly_3.mean()):
         print("El mejor estimador es SVC con el kernel polinomico de grado 3 ")
+        mejor_score = scores_poly_3
         grid_search = svc_poly_3
     elif comparar_reales(mejor_score, scores_poly_4.mean()):
         print("El mejor estimador es SVC con el kernel polinomico de grado 4 ")
+        mejor_score = scores_poly_4
         print(grid_poly_4.best_params_)
         grid_search = svc_poly_4
         
@@ -121,5 +126,4 @@ def clasificar_piernas():
     # guardamos el clasificador
     with open("mejor_clasificador.pkl", "wb") as archivo:
         pickle.dump(grid_search, archivo)
-        
         
