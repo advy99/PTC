@@ -118,9 +118,9 @@ def funcion_capturar():
         if respuesta:
             es_positivos = archivo[0:3] == "pos"
             if es_positivos:
-                capturar.capturarPositivos(archivo, id_cliente)
+                capturar.capturar_positivos(archivo, id_cliente)
             else:
-                capturar.capturarNegativos(archivo, id_cliente)
+                capturar.capturar_negativos(archivo, id_cliente)
 
             ficheros_capturados.append(archivo)
             
@@ -153,9 +153,12 @@ def main():
     
     id_cliente = -1
 
+    # creamos las carpetas, no pasa nada si existen
     for i in range(1, 7):
         os.makedirs("positivo" + str(i), exist_ok = True)
         os.makedirs("negativo" + str(i), exist_ok = True)
+        
+    os.makedirs("prediccion", exist_ok = True)
 
     root = tkinter.Tk()
     root.geometry("700x300")
