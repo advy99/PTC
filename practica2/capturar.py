@@ -61,10 +61,10 @@ def capturar_positivos(fichero, id_cliente):
     a_recorrer = 0.0
     
     if re.findall("Cerca", fichero):
-        a_recorrer = Parametros.media - Parametros().cerca
+        a_recorrer = Parametros.media - Parametros.cerca
         distancia = Parametros.cerca + a_recorrer 
     elif re.findall("Media", fichero):
-        a_recorrer = Parametros.lejos - Parametros().media
+        a_recorrer = Parametros.lejos - Parametros.media
         distancia = Parametros.media + a_recorrer
     elif re.findall("Lejos", fichero):
         a_recorrer = 1
@@ -122,10 +122,10 @@ def capturar_negativos(fichero, id_cliente):
     a_recorrer = 0.0
     
     if re.findall("Cerca", fichero):
-        a_recorrer = Parametros.media - Parametros().cerca
+        a_recorrer = Parametros.media - Parametros.cerca
         distancia = Parametros.cerca + a_recorrer 
     elif re.findall("Media", fichero):
-        a_recorrer = Parametros.lejos - Parametros().media
+        a_recorrer = Parametros.lejos - Parametros.media
         distancia = Parametros.media + a_recorrer
     elif re.findall("Lejos", fichero):
         a_recorrer = 1
