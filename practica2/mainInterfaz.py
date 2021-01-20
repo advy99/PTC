@@ -137,6 +137,7 @@ def main():
     global boton_conectar
     global boton_desconectar
     global boton_capturar
+    global boton_agrupar
     global etiqueta_estado
     global entrada_iteraciones
     global entrada_cerca
