@@ -18,6 +18,7 @@ import cv2
 import time
 import matplotlib.pyplot as plt
 import json
+import pandas as pd
 
 from parametros import Parametros
 
@@ -64,7 +65,9 @@ def predecir_escena(id_cliente):
     # leemos el predictor
     with open("mejor_clasificador.pkl", "rb") as archivo:
         clasificador = pickle.load(archivo)
-    
+        
+    plt.clf()    
+
     for cluster in clusters:
         if cluster != "":
             info_cluster = json.loads(cluster)
@@ -75,11 +78,14 @@ def predecir_escena(id_cliente):
             perimetro = caracteristicas.calcular_perimetro(puntos)
             profundidad = caracteristicas.calcular_profundidad(puntos)
             anchura = caracteristicas.calcular_anchura(puntos)
+                    
+            datos_x = np.array([perimetro, profundidad, anchura]).reshape(1, -1)
             
-            caracteristicas_cluster = np.array([perimetro, profundidad, anchura]).reshape(1, -1)
-            
-            prediccion = clasificador.predict(caracteristicas_cluster)
-            
-            print(prediccion)
-
-
+            prediccion = clasificador.predict(datos_x)
+                        
+            if prediccion == 0:
+                plt.plot(puntos_x, puntos_y, 'b.')
+            else:
+                plt.plot(puntos_x, puntos_y, 'r.')
+    
+    plt.savefig("prediccion/capturaTest.jpg")
