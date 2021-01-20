@@ -64,6 +64,3 @@ def clasificar_piernas():
     # guardamos el clasificador
     with open("mejor_clasificador.pkl", "wb") as archivo:
         pickle.dump(grid_search, archivo)
-
-    
-clasificar_piernas()
