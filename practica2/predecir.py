@@ -17,11 +17,10 @@ import numpy as np
 import cv2
 import time
 import matplotlib.pyplot as plt
+import json
 
 from parametros import Parametros
-Parametros.min_puntos = 3
-Parametros.max_puntos = 25
-Parametros.umbral_distancia = 5
+
 
 def predecir_escena(id_cliente):
     
@@ -41,43 +40,53 @@ def predecir_escena(id_cliente):
     # creamos la muestra
     muestra = {"Iteracion":0, "PuntosX":puntosx, "PuntosY":puntosy}
     
-    clusters = []
-    # la procesamos para agruparla
-    clusters_m = agrupar.clusters_muestra(muestra)
-    clusters.append( clusters_m[:] )
+    f_muestra = open("prediccion/muestraEscena.json", "w")
     
-    agrupar.volcar_clusters("prediccion/clustersPrediccion.json", clusters)
+    cabecera = {"TiempoSleep":0.5,
+                "MaxIteraciones":1}
+    f_muestra.write(json.dumps(cabecera) + '\n')
+
+    f_muestra.write(json.dumps(muestra) + '\n')
+
+    f_muestra.close()
+    
+    
+    # pasamos a los clusters
+    clusters_escena = agrupar.agrupar_clusters(["prediccion/muestraEscena.json"])
+    agrupar.volcar_clusters("prediccion/clustersPrediccion.json", clusters_escena)
+    
+    f_lectura = open("prediccion/clustersPrediccion.json", "r")
+    
+    clusters = f_lectura.readlines()
+    
+    f_lectura.close()
     
     # leemos el predictor
     with open("mejor_clasificador.pkl", "rb") as archivo:
         clasificador = pickle.load(archivo)
     
-    clusters = np.array(clusters)
-    
-    # para cada cluster, calculamos las caracteristicas
     for cluster in clusters:
-        cluster_np = np.array(cluster)
-        if len(cluster_np) != 0:
-            dic_cluster = {"numero_puntos":len(cluster), "puntosX":list(cluster_np[:, 0]), "puntosY":list(cluster_np[:, 1])}
-        
-            puntos_x = np.array(dic_cluster["puntosX"]).reshape(-1, 1)
-            puntos_y = np.array(dic_cluster["puntosY"]).reshape(-1, 1)
+        if cluster != "":
+            info_cluster = json.loads(cluster)
+            puntos_x = np.array(info_cluster["puntosX"]).reshape(-1, 1)
+            puntos_y = np.array(info_cluster["puntosY"]).reshape(-1, 1)
 
             puntos = np.concatenate([puntos_x, puntos_y], axis = 1)
             perimetro = caracteristicas.calcular_perimetro(puntos)
             profundidad = caracteristicas.calcular_profundidad(puntos)
             anchura = caracteristicas.calcular_anchura(puntos)
             
-            caracteristicas_cluster = [perimetro, profundidad, anchura]
-            caracteristicas_cluster = np.array(caracteristicas_cluster)
+            caracteristicas_cluster = np.array([perimetro, profundidad, anchura]).reshape(1, -1)
             
-            prediccion = clasificador.predict([caracteristicas_cluster])
+            prediccion = clasificador.predict(caracteristicas_cluster)
             
-            plt.clf()    
-            plt.plot(puntosx, puntosy, 'r.')
-            plt.show()
-    
-                 
+            print(prediccion)
+
+Parametros.min_puntos = 3
+Parametros.max_puntos = 25
+Parametros.umbral_distancia = 3
 vrep.simxFinish(-1)
 id_cliente = vrep.simxStart("127.0.0.1", 19999, True, True, 5000, 5)
 predecir_escena(id_cliente)
+
+
