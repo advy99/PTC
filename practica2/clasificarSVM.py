@@ -32,34 +32,38 @@ def clasificar_piernas():
     
     # dividimos train y test, 20% de test
     x_train, x_test, y_train, y_test = train_test_split(datos_x, datos_y, test_size = 0.20, random_state=25)
-
-
-    # kernel lineal
     
-    svc_lineal = SVC(kernel='linear')  
-    svc_lineal.fit(x_train, y_train)
+    # grid de parametros para la grid search
+    parametros = [
+        {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['linear']},
+        {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+        {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'degree': [1, 2, 3, 4, 5], 'kernel': ['poly']}
+    ]
+
+    svc = SVC()
     
-    y_pred = svc_lineal.predict(x_test)
+    grid_search = GridSearchCV(svc, parametros)
 
-    acc_test=accuracy_score(y_test, y_pred)
+    grid_search.fit(x_train, y_train)
 
-    print("Acc_test Lineal: (TP+TN)/(T+P)  %0.4f" % acc_test)
+    print("Mejores parametros encontrados por grid_search:")
+    print(grid_search.best_params_)
+    
+    y_pred = grid_search.predict(x_test)
 
     print("Matriz de confusión Filas: verdad Columnas: predicción")
-
     print(confusion_matrix(y_test, y_pred))
     
-    print("Precision= TP / (TP + FP), Recall= TP / (TP + FN)")
-    print("f1-score es la media entre precisión y recall")
-    print(classification_report(y_test, y_pred))
-
     
-    # ahora con cross-val
-    svc_lineal2 = SVC(kernel='linear')
-
-    scores = cross_val_score(svc_lineal2, datos_x, datos_y, cv=5)
+    # predicciones con validación cruzada:
+    scores = cross_val_score(grid_search, datos_x, datos_y, cv=5)
 
     # exactitud media con intervalo de confianza del 95%
     print("Accuracy 5-cross validation: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
+
+    # guardamos el clasificador
+    with open("mejor_clasificador.pkl", "wb") as archivo:
+        pickle.dump(grid_search, archivo)
+
     
 clasificar_piernas()
