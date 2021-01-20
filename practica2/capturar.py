@@ -9,7 +9,28 @@ import time
 import glob
 import re
 
-def capturarPositivos(fichero, id_cliente):
+def leer_datos_laser(id_cliente, segundos):
+    #listas para recibir las coordenadas x, y z de los puntos detectados por el laser
+    puntosx = []
+    puntosy = []
+    puntosz = []
+    
+    returnCode, signalValue = vrep.simxGetStringSignal(id_cliente,'LaserData',vrep.simx_opmode_buffer)
+    
+    #esperamos un tiempo para que el ciclo de lectura de datos no sea muy rápido
+    time.sleep(segundos) 
+    
+    datosLaser = vrep.simxUnpackFloats(signalValue)
+    
+    for indice in range(0,len(datosLaser),3):
+        puntosx.append(datosLaser[indice+1])
+        puntosy.append(datosLaser[indice+2])
+        puntosz.append(datosLaser[indice])
+        
+    return puntosx, puntosy, puntosz
+
+
+def capturar_positivos(fichero, id_cliente):
     
     # sensor de la camara
     _, camhandle = vrep.simxGetObjectHandle(id_cliente, 'Vision_sensor', vrep.simx_opmode_oneshot_wait)
@@ -54,22 +75,7 @@ def capturarPositivos(fichero, id_cliente):
 
     
     for i in range(1, Parametros.iteraciones):
-        #listas para recibir las coordenadas x, y z de los puntos detectados por el laser
-        puntosx = []
-        puntosy = []
-        puntosz = []
-        
-        returnCode, signalValue = vrep.simxGetStringSignal(id_cliente,'LaserData',vrep.simx_opmode_buffer)
-        
-        #esperamos un tiempo para que el ciclo de lectura de datos no sea muy rápido
-        time.sleep(segundos) 
-        
-        datosLaser = vrep.simxUnpackFloats(signalValue)
-        
-        for indice in range(0,len(datosLaser),3):
-            puntosx.append(datosLaser[indice+1])
-            puntosy.append(datosLaser[indice+2])
-            puntosz.append(datosLaser[indice])
+        puntosx, puntosy, _ = leer_datos_laser(id_cliente, segundos)
     
         # escribimos los datos
         lectura = {"Iteracion":i, "PuntosX":puntosx, "PuntosY":puntosy}
@@ -84,7 +90,7 @@ def capturarPositivos(fichero, id_cliente):
                                                                                
                                                                                
    
-def capturarNegativos(fichero, id_cliente):
+def capturar_negativos(fichero, id_cliente):
     
     # sensor de la camara
     _, camhandle = vrep.simxGetObjectHandle(id_cliente, 'Vision_sensor', vrep.simx_opmode_oneshot_wait)
@@ -131,22 +137,7 @@ def capturarNegativos(fichero, id_cliente):
 
     
     for i in range(1, Parametros.iteraciones):
-        #listas para recibir las coordenadas x, y z de los puntos detectados por el laser
-        puntosx = []
-        puntosy = []
-        puntosz = []
-        
-        returnCode, signalValue = vrep.simxGetStringSignal(id_cliente,'LaserData',vrep.simx_opmode_buffer)
-        
-        #esperamos un tiempo para que el ciclo de lectura de datos no sea muy rápido
-        time.sleep(segundos) 
-        
-        datosLaser = vrep.simxUnpackFloats(signalValue)
-        
-        for indice in range(0,len(datosLaser),3):
-            puntosx.append(datosLaser[indice+1])
-            puntosy.append(datosLaser[indice+2])
-            puntosz.append(datosLaser[indice])
+        puntosx, puntosy, _ = leer_datos_laser(id_cliente, segundos)
     
         # escribimos los datos
         lectura = {"Iteracion":i, "PuntosX":puntosx, "PuntosY":puntosy}
