@@ -50,9 +50,14 @@ def clasificar_piernas():
     columnas = ["perimetro", "profundidad", "anchura", "clase"]
     
     datos_piernas = pd.read_csv("piernasDataset.csv", names=columnas)
+    
 
     datos_x = datos_piernas.drop("clase", axis = 1)
     datos_y = datos_piernas["clase"]
+    
+    # normalizamos los datos, si no tarda mucho
+    datos_x = (datos_x - datos_x.mean()) / (datos_x.max() - datos_x.min())
+
     
     # dividimos train y test, 20% de test
     x_train, x_test, y_train, y_test = train_test_split(datos_x, datos_y, test_size = 0.20, random_state=25)
@@ -104,3 +109,4 @@ def clasificar_piernas():
     # guardamos el clasificador
     with open("mejor_clasificador.pkl", "wb") as archivo:
         pickle.dump(grid_search, archivo)
+        
