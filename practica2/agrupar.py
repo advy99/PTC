@@ -70,7 +70,6 @@ def volcar_clusters(salida_json, clusters):
     fichero_salida = open(salida_json, "w")
     
     i = 0
-
     for cluster in clusters:
         cluster_np = np.array(cluster)
         if len(cluster_np) != 0:
@@ -88,4 +87,3 @@ def agrupar():
     directoriosNegativos = sorted(glob.glob("negativo?/*.json"))
     clusters_negativos = agrupar_clusters(directoriosNegativos)
     volcar_clusters("clustersNoPiernas.json", clusters_negativos)
-    
