@@ -42,8 +42,9 @@ def clusters_muestra(muestra):
         if len(cluster) >= Parametros.min_puntos:
             todos_clusters.append(cluster)
             
+            
         i = j + 2
-
+    
     return todos_clusters
     
 
@@ -63,6 +64,7 @@ def agrupar_clusters(directorios):
                 
                 clusters_muestra_actual = clusters_muestra(muestra)
                 clusters.append( clusters_muestra_actual[:] )
+
         fichero.close()
 
     return clusters
@@ -70,11 +72,10 @@ def agrupar_clusters(directorios):
 
 def volcar_clusters(salida_json, clusters):
     fichero_salida = open(salida_json, "w")
-    
     i = 0
-    for cluster in clusters:
-        if len(cluster) != 0:
-            cluster_np = np.array(cluster[0])
+    for muestra in clusters:
+        for cluster in muestra:
+            cluster_np = np.array(cluster)
             salida = {"numero_cluster":i, "numero_puntos":len(cluster_np), "puntosX":list(cluster_np[:, 0]), "puntosY":list(cluster_np[:, 1])}
             fichero_salida.write(json.dumps(salida) + '\n')
             i += 1
