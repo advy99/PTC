@@ -30,7 +30,7 @@ def clusters_muestra(muestra):
         
         # mientras no me pase del umbral, no haya llegado al máximo de puntos, y me queden puntos
         while not he_pasado_umbral and len(cluster) < Parametros.max_puntos and j < len(puntos) - 1:
-            distancia = math.hypot(puntos[j+1,0] - puntos[j,0], puntos[j+1,1] - puntos[j,0] )
+            distancia = math.hypot(puntos[j+1,0] - puntos[j,0], puntos[j+1,1] - puntos[j,1] )
             # si la distancia con el siguiente es menor o igual, lo meto en el cluster
             if distancia <= Parametros.umbral_distancia:
                 cluster += [puntos[j + 1]]
