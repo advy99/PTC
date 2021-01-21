@@ -318,6 +318,10 @@ Estos parámetros los he escogido porque empíricamente han funcionado bien y ha
 
 \subsection{Capturas de datos}
 
+Para hacer la captura de datos se ha preparado 4 escenas, una con Bill sentado, otra de pie, otra escena con dos cilindros pequeños y otra con dos cilindros grandes. Al capturar los datos la función reconocerá si se pide que sea para el intervalo cerca, media o lejos y colocará a Bill o a los cilindros en la posición concreta. De cara a realizar la captura de datos de forma correcta, al saber el intervalo que se van a mover los objetos (por ejemplo, entre cerca y media), cada iteración se moverá el objeto correspondiente un pequeño paso para cubrir todo el espacio en las iteraciones dadas. 
+
+Algunos ejemplos de capturas de datos:
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{captura_datos.png}
@@ -355,7 +359,7 @@ Estos parámetros los he escogido porque empíricamente han funcionado bien y ha
 \end{figure}
 
 
-
+De cara a los casos negativos he hecho la captura con paredes, ya que las paredes serán casos de no piernas:
 
 
 \begin{figure}[H]
@@ -394,7 +398,12 @@ Estos parámetros los he escogido porque empíricamente han funcionado bien y ha
     \caption{Captura de datos con cilindro grande lejos.}
 \end{figure}
 
+Tras capturar todos los datos, simplemente pulsamos agrupar y tras eso extraer características. Con esto podemos pasar a la parte del entrenamiento.
+
+
 \subsection{Resultados del aprendizaje de la SVM}
+
+Al entrenar el modelo veremos la siguiente salida:
 
 \begin{figure}[H]
     \centering
@@ -403,6 +412,7 @@ Estos parámetros los he escogido porque empíricamente han funcionado bien y ha
 \end{figure}
 
 
+Aquí podemos ver la salida en texto, de cara a una mejor lectura:
 
 \begin{lstlisting}
 Entrenando modelos, esto puede tardar un poco
@@ -434,7 +444,11 @@ El mejor estimador es SVC con el kernel RBF con los siguientes parámetros:
 Y con un accuracy 5-cross validation: 0.9841 (+/- 0.0179)
 \end{lstlisting}
 
+Como vemos el mejor clasificador es el SVC con el kernel RBF y los parámetros $C = 1000$ y $gamma = 0.1$, que nos ofrece una accuracy con cross validation de un $98.4\%$ en el conjunto de entrenamiento.
+
 \subsection{Resultados en escena de test}
+
+Tras entrenar el clasificador, pasamos a predecir una escena con todo tipo de objetos. En concreto he usado la escena de test dada:
 
 \begin{figure}[H]
     \centering
@@ -442,12 +456,16 @@ Y con un accuracy 5-cross validation: 0.9841 (+/- 0.0179)
     \caption{Escena de prueba para predecir.}
 \end{figure}
 
+
+Tras esto, los resultados obtenidos son estos:
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{capturaTest.jpg}
     \caption{Resultados de la predicción.}
 \end{figure}
 
+Como vemos, da algunos falsos positivos, con lo que cabe pensar que el modelo es demasiado simple y tenemos un sobreajuste, que hace que el accuracy en entrenamiento sea tan elevado. Una posible solución sería obtener más datos de entrenamiento o probar con un modelo distinto a SVC.
 
 % \begin{thebibliography}{9}
 %

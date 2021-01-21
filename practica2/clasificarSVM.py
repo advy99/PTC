@@ -32,7 +32,7 @@ def entrenar_modelo(datos_x, datos_y, x_train, y_train, x_test, y_test, svc):
     
     
     # predicciones con validación cruzada:
-    scores = cross_val_score(svc, x_test, y_test, cv=2, n_jobs=-1)
+    scores = cross_val_score(svc, x_test, y_test, cv=5, n_jobs=-1)
 
     # exactitud media con intervalo de confianza del 95%
     print("Accuracy 5-cross validation: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
